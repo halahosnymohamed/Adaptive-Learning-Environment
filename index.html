@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بيئة تعلم مدمجة تكيفية لتنمية مفاهيم الحاسب الآلي لذوي الإعاقة السمعية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0b2447;
+    --navy-2:#134074;
+    --gold:#c9a227;
+    --gold-2:#e8c766;
+    --bg:#f5f7fa;
+    --card:#ffffff;
+    --text:#1c1c1c;
+    --muted:#5a5a5a;
+    --radius:14px;
+    --focus:#0b2447;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Cairo','Tajawal',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.8;
+    font-size:18px;
+  }
+  a{color:inherit;}
+  header{
+    background:var(--navy);
+    color:#fff;
+    padding:14px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    border-bottom:4px solid var(--gold);
+  }
+  .brand{display:flex;align-items:center;gap:14px;}
+  .brand img{height:52px;width:auto;background:#fff;border-radius:8px;padding:4px;}
+  .brand-text{font-weight:700;font-size:16px;}
+  .brand-text small{display:block;font-weight:400;font-size:13px;color:var(--gold-2);}
+  nav{display:flex;flex-wrap:wrap;gap:6px;}
+  nav button{
+    background:transparent;
+    border:1px solid rgba(255,255,255,.25);
+    color:#fff;
+    padding:9px 16px;
+    border-radius:999px;
+    font-family:inherit;
+    font-size:15px;
+    cursor:pointer;
+    transition:.2s;
+  }
+  nav button:hover, nav button:focus-visible{background:rgba(255,255,255,.15);}
+  nav button.active{background:var(--gold);color:var(--navy);border-color:var(--gold);font-weight:700;}
+  main{max-width:980px;margin:0 auto;padding:32px 20px 80px;}
+  section{display:none;animation:fade .25s ease;}
+  section.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  h1{font-size:26px;color:var(--navy);margin:0 0 6px;}
+  h2{font-size:22px;color:var(--navy);border-bottom:3px solid var(--gold);padding-bottom:8px;display:inline-block;margin-bottom:18px;}
+  h3{font-size:19px;color:var(--navy-2);}
+  .card{background:var(--card);border-radius:var(--radius);padding:24px;box-shadow:0 2px 10px rgba(0,0,0,.06);margin-bottom:20px;}
+  .cover{text-align:center;padding:30px 10px;}
+  .cover .logos{display:flex;justify-content:center;gap:80px;margin-bottom:18px;flex-wrap:wrap;}
+  .cover .logos img{height:100px;width:auto;}
+  .cover h1{font-size:24px;line-height:1.6;max-width:760px;margin:0 auto 6px;}
+  .cover h1.en{font-size:17px;color:var(--muted);font-weight:400;}
+  .cover .meta{margin-top:26px;font-size:16px;color:var(--muted);}
+  .cover .meta b{color:var(--navy);}
+  .supervisors{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:18px;}
+  .supervisors .sup{background:var(--bg);border-radius:12px;padding:16px 20px;min-width:220px;}
+  .supervisors .sup b{color:var(--navy);display:block;margin-bottom:8px;font-size:13px;}
+  .supervisors .sup span{display:block;font-size:14px;color:var(--muted);}
+  .supervisors .sup span:first-of-type{color:var(--navy);font-weight:700;font-size:16px;margin-bottom:3px;}
+  .credit{margin-top:28px;font-weight:700;color:var(--navy);font-size:17px;}
+  table{width:100%;border-collapse:collapse;margin:14px 0;}
+  th,td{border:1px solid #dfe3e8;padding:10px 12px;text-align:right;vertical-align:top;}
+  th{background:var(--navy);color:#fff;}
+  tr:nth-child(even) td{background:#f4f6f9;}
+  .tabs{display:flex;gap:8px;margin-bottom:18px;}
+  .tabs button{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    border:2px solid var(--navy-2);
+    background:#fff;
+    color:var(--navy-2);
+    font-family:inherit;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .tabs button.active{background:var(--navy-2);color:#fff;}
+  .tabpanel{display:none;}
+  .tabpanel.active{display:block;}
+  .path-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:10px;}
+  @media (max-width:640px){.path-grid{grid-template-columns:1fr;}}
+  .path-card{
+    background:#fff;
+    border:3px solid var(--navy);
+    border-radius:16px;
+    padding:26px 18px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+  }
+  .path-card:hover, .path-card:focus-visible{transform:translateY(-4px);box-shadow:0 8px 20px rgba(11,36,71,.18);}
+  .path-card svg{width:70px;height:70px;margin-bottom:12px;}
+  .path-card h3{margin:6px 0 8px;}
+  .path-card p{color:var(--muted);font-size:15px;margin:0;}
+  .lesson-header{display:flex;align-items:center;gap:12px;background:var(--navy);color:#fff;padding:16px 20px;border-radius:var(--radius) var(--radius) 0 0;}
+  .lesson-header .badge{background:var(--gold);color:var(--navy);font-weight:700;padding:6px 14px;border-radius:999px;font-size:14px;}
+  .lesson-body{background:#fff;padding:24px;border:2px solid #eee;border-top:none;}
+  .visual-box{background:#eef4ff;border:2px dashed var(--navy-2);border-radius:12px;padding:20px;text-align:center;margin:16px 0;color:var(--navy-2);font-weight:700;}
+  .icon-row{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0;}
+  .icon-row .step{flex:1;min-width:150px;background:var(--bg);border-radius:12px;padding:16px;text-align:center;}
+  .icon-row .step .num{width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--navy);font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;}
+  .lesson-nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--bg);
+    border:2px solid #eee;
+    border-top:none;
+    border-radius:0 0 var(--radius) var(--radius);
+    padding:14px 20px;
+    position:sticky;
+    bottom:0;
+  }
+  .lesson-nav button{
+    width:120px;
+    height:48px;
+    border-radius:10px;
+    border:none;
+    font-family:inherit;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .lesson-nav .prev{background:#e2e6ea;color:var(--navy);}
+  .lesson-nav .next{background:var(--navy);color:#fff;}
+  .lesson-nav .quiz-btn{background:var(--gold);color:var(--navy);}
+  .quiz-q{background:var(--bg);border-radius:12px;padding:18px;margin-bottom:16px;}
+  .quiz-q p{font-weight:700;margin:0 0 10px;}
+  .quiz-q label{display:block;padding:8px 12px;border-radius:8px;margin-bottom:6px;background:#fff;cursor:pointer;border:2px solid transparent;}
+  .quiz-q label:hover{border-color:var(--navy-2);}
+  .quiz-q input{margin-left:8px;}
+  .quiz-result{font-weight:700;font-size:18px;color:var(--navy);margin-top:14px;}
+  .audio-controls{background:var(--bg);border-radius:12px;padding:18px;margin-top:16px;}
+  .audio-controls p{margin:0 0 8px;}
+  .vol-btns{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;}
+  .vol-btns button{padding:10px 18px;border-radius:999px;border:2px solid var(--navy-2);background:#fff;color:var(--navy-2);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;}
+  .vol-btns button.active{background:var(--navy-2);color:#fff;}
+  .btn-primary{background:var(--navy);color:#fff;border:none;padding:12px 24px;border-radius:10px;font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;margin-top:10px;}
+  footer{text-align:center;padding:24px;color:var(--muted);font-size:14px;}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  .skip-link{position:absolute;right:-999px;top:0;background:var(--gold);color:var(--navy);padding:10px 16px;z-index:100;}
+  .skip-link:focus{right:10px;}
+  a:focus-visible, button:focus-visible{outline:3px solid var(--focus);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">تخطَّ إلى المحتوى الرئيسي</a>
+
+<header>
+  <div class="brand">
+    <img src="assets/img/logo-college.png" alt="شعار كلية التربية - جامعة عين شمس">
+    <img src="assets/img/logo-university.png" alt="شعار جامعة عين شمس">
+    <div class="brand-text">بيئة التعلم التكيفية<small>لتنمية مفاهيم الحاسب الآلي لذوي الإعاقة السمعية</small></div>
+  </div>
+  <nav id="mainNav">
+    <button data-section="home" class="active">الرئيسية</button>
+    <button data-section="guide">التعليمات</button>
+    <button data-section="intro">المقدمة</button>
+    <button data-section="objectives">الأهداف</button>
+    <button data-section="content">المحتوى</button>
+    <button data-section="quiz">اختبار المفاهيم</button>
+    <button data-section="contact">اتصل بنا</button>
+  </nav>
+</header>
+
+<main id="main-content">
+
+  <section id="home" class="active">
+    <div class="card cover">
+      <div class="logos">
+        <img src="assets/img/logo-college.png" alt="شعار كلية التربية">
+        <img src="assets/img/logo-university.png" alt="شعار جامعة عين شمس">
+      </div>
+      <h1>فاعلية بيئة تعلم مدمجة تكيفية وفقًا لمستوى الإعاقة السمعية في تنمية مفاهيم الحاسب الآلي لدى تلاميذ الحلقة الثانية من التعليم الأساسي</h1>
+      <h1 class="en">The Effectiveness of an Integrated Learning Environment Adapted to the Level of Hearing Disability in Developing Computer Concepts</h1>
+      <div class="meta">
+        <p>بحث مقدم للتسجيل لدرجة الماجستير في التربية<br>تخصص: تكنولوجيا التعليم وإعداد المواد التعليمية</p>
+        <p>كلية التربية - جامعة عين شمس | قسم المناهج وطرق التدريس</p>
+      </div>
+      <div class="supervisors">
+        <div class="sup"><b>إعداد</b><span>هالة حسني محمد كمال</span><span>أخصائية اجتماعية</span></div>
+        <div class="sup"><b>إشراف</b><span>أ.م.د محمود مصطفى عطية</span><span>أستاذ تكنولوجيا تعليم مساعد - كلية التربية - جامعة عين شمس</span></div>
+        <div class="sup"><b>إشراف</b><span>د. سمر رجب حافظ</span><span>مدرس قسم تربية خاصة - كلية التربية - جامعة عين شمس</span></div>
+      </div>
+      <p class="credit">مقدم بواسطة: هالة حسني محمد كمال</p>
+    </div>
+  </section>
+
+  <section id="guide">
+    <h2>التعليمات (دليل الاستخدام)</h2>
+    <div class="tabs">
+      <button data-tab="student" class="active">دليل الطالب</button>
+      <button data-tab="teacher">دليل المعلم</button>
+    </div>
+    <div id="tab-student" class="tabpanel active card">
+      <h3>كيف تستخدم البيئة؟</h3>
+      <ol>
+        <li>من صفحة "المحتوى" اختر الأيقونة التي تناسبك: ضعاف السمع أو متوسطي السمع.</li>
+        <li>استخدم زر "التالي" للانتقال بين أجزاء الدرس، وزر "السابق" للرجوع.</li>
+        <li>بعد انتهاء الدرس اضغط "ابدأ الاختبار" للتأكد من فهمك.</li>
+        <li>الأزرار في نفس المكان دائمًا حتى يسهل عليك تذكرها.</li>
+      </ol>
+    </div>
+    <div id="tab-teacher" class="tabpanel card">
+      <h3>ملاحظات للمعلم / أخصائي التربية الخاصة</h3>
+      <ul>
+        <li>يمكن استخدام البيئة بشكل فردي مع كل تلميذ حسب درجة إعاقته السمعية.</li>
+        <li>يُفضَّل مرافقة التلميذ في أول استخدام لتوضيح أزرار التنقل.</li>
+        <li>مسار "متوسطي السمع" يعتمد بشكل أكبر على الوسائط البصرية ولغة الإشارة، بينما مسار "ضعاف السمع" يضيف دعمًا صوتيًا مع تكبير الصوت والترجمة النصية.</li>
+        <li>يمكن للمعلم متابعة نتيجة الاختبار مع كل تلميذ بعد انتهائه.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="intro">
+    <h2>المقدمة</h2>
+    <div class="card">
+      <p>تُعد مفاهيم الحاسب الآلي من المفاهيم الأساسية في المناهج الدراسية المعاصرة، لما لها من دور في إعداد التلاميذ لمتطلبات العصر الرقمي، وتنمية مهارات التفكير المنطقي وحل المشكلات.</p>
+      <p>ويواجه تلاميذ الحلقة الثانية من التعليم الأساسي ذوو الإعاقة السمعية صعوبات متعددة في تعلم هذه المفاهيم نظرًا لاعتماد المادة العلمية بشكل كبير على الشرح اللفظي والمصطلحات التقنية. من هنا تأتي أهمية تصميم بيئة تعلم مدمجة تكيفية تراعي مستوى الإعاقة السمعية لدى كل تلميذ، وتقدّم المحتوى بصورة بصرية غنية (نصوص، صور، رسوم توضيحية، فيديوهات مترجمة بلغة الإشارة) بدلًا من الاعتماد على الحاسة السمعية وحدها.</p>
+      <p>تجمع هذه البيئة بين التعلم المباشر داخل الفصل والتعلم الإلكتروني عبر الإنترنت، مع تكييف طريقة عرض المحتوى وفقًا لدرجة الإعاقة السمعية لدى المتعلم، بهدف تحسين فهمه لمفاهيم الحاسب الآلي وزيادة دافعيته للتعلم.</p>
+    </div>
+  </section>
+
+  <section id="objectives">
+    <h2>أهداف البحث</h2>
+    <div class="card">
+      <h3>أولًا: الأهداف الوجدانية</h3>
+      <table>
+        <tr><th>م</th><th>الهدف</th></tr>
+        <tr><td>1</td><td>أن يشعر التلميذ بالفخر والإنجاز عند تحقيق الأهداف.</td></tr>
+        <tr><td>2</td><td>أن يعزز شعور الإنجاز بشعور الإيجابية والاستمرارية في التعلم.</td></tr>
+        <tr><td>3</td><td>أن يتطور الشعور بالثقة بالنفس لديه.</td></tr>
+        <tr><td>4</td><td>أن يظهر الرضا والسعادة خلال تجارب التعلم.</td></tr>
+      </table>
+      <h3>ثانيًا: الأهداف المهارية</h3>
+      <table>
+        <tr><th>م</th><th>الهدف</th></tr>
+        <tr><td>5</td><td>أن يتعلم التلميذ مهارات تنظيم الوقت وإدارته.</td></tr>
+        <tr><td>6</td><td>أن يحسن مهارة الانتباه والتركيز لديه.</td></tr>
+        <tr><td>7</td><td>أن يحسن مهاراة الإدراك السمعي.</td></tr>
+        <tr><td>8</td><td>أن يحسن مهارة الإدراك البصري لديه.</td></tr>
+        <tr><td>9</td><td>أن يحسن مهارة الأداء الحركي - المكاني لديه.</td></tr>
+        <tr><td>10</td><td>أن يتمكن من تحسين مهارات الاتصال الشفوي.</td></tr>
+        <tr><td>11</td><td>أن يتمكن من تحسين مهارات الاتصال الكتابي.</td></tr>
+        <tr><td>12</td><td>أن يطور مهارات التحليل والتفكير الناقد.</td></tr>
+      </table>
+      <h3>ثالثًا: الأهداف المعرفية</h3>
+      <table>
+        <tr><th>م</th><th>الهدف</th></tr>
+        <tr><td>13</td><td>أن يتعرف التلميذ على المفاهيم التعليمية بشكل مبسط.</td></tr>
+        <tr><td>14</td><td>أن يستطيع تطبيق المفاهيم التعليمية في سياقات واقعية.</td></tr>
+        <tr><td>15</td><td>أن يتمكن من استخدام المعرفة في حل المشكلات اليومية.</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="content">
+    <h2>المحتوى</h2>
+    <div id="trackPicker">
+      <p style="color:var(--muted)">اختر مسارك المناسب:</p>
+      <div class="path-grid">
+        <div class="path-card" tabindex="0" onclick="openLesson('weak')" onkeypress="if(event.key==='Enter')openLesson('weak')">
+          <img src="assets/img/weak.png" alt="أيقونة ضعاف السمع" style="width:70px;height:70px;object-fit:contain;margin-bottom:12px;">
+          <h3>ضعاف السمع</h3>
+          <p>شرح بصري: فيديو برسوم متحركة وكتابة على السبورة.</p>
+        </div>
+        <div class="path-card" tabindex="0" onclick="openLesson('mid')" onkeypress="if(event.key==='Enter')openLesson('mid')">
+          <img src="assets/img/mid.png" alt="أيقونة متوسطي السمع" style="width:70px;height:70px;object-fit:contain;margin-bottom:12px;">
+          <h3>متوسطي السمع</h3>
+          <p>شرح صوتي، مع التحكم في مستوى الصوت والاتصال بسماعة بلوتوث.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="lessonView" style="display:none;margin-top:26px;">
+      <div class="lesson-header"><span class="badge" id="lvTrackBadge"></span><h3 style="margin:0;color:#fff;">الدرس: أجهزة الاستشعار</h3></div>
+      <div class="lesson-body">
+
+        <div id="weakContent" style="display:none;">
+          <p>هل تساءلت يومًا كيف تعمل الأشياء من حولنا بذكاء؟ كيف تضيء المصابيح تلقائيًا عندما يحل الظلام، أو يتوقف صنبور المياه عن التدفق بمجرد أن تسحب يدك؟ شاهد الفيديو التالي وتعرّف على أجهزة الاستشعار:</p>
+          <video id="senseVideo" controls style="width:100%;border-radius:12px;background:#000;">
+            <source src="assets/media/vid.mp4" type="video/mp4">
+            متصفحك لا يدعم عرض الفيديو.
+          </video>
+        </div>
+
+        <div id="midContent" style="display:none;">
+          <p>استمع للشرح الصوتي التالي عن أجهزة الاستشعار:</p>
+          <audio id="senseAudio" controls style="width:100%;">
+            <source src="assets/media/audio.mp3" type="audio/mpeg">
+            متصفحك لا يدعم تشغيل الصوت.
+          </audio>
+          <div class="audio-controls">
+            <p><b>مستوى الصوت:</b></p>
+            <div class="vol-btns">
+              <button type="button" data-vol="1" class="active">100%</button>
+              <button type="button" data-vol="1.5">150%</button>
+              <button type="button" data-vol="2">200%</button>
+              <button type="button" data-vol="2.5">250%</button>
+            </div>
+            <p><b>الاتصال بسماعة الأذن (بلوتوث):</b></p>
+            <button type="button" class="btn-primary" id="btConnectBtn" style="margin-top:0;">🔵 عرض أجهزة الصوت المتاحة</button>
+            <select id="audioOutputSelect" style="display:none;margin-top:10px;padding:10px;border-radius:8px;border:2px solid var(--navy-2);font-family:inherit;width:100%;"></select>
+            <p style="font-size:13px;color:var(--muted);margin-top:8px;">* لظهور سماعة البلوتوث في القائمة، يجب إقرانها أولًا بالجهاز من إعدادات النظام (البلوتوث)، ثم الضغط على الزر أعلاه.</p>
+            <p id="fileProtocolWarning" style="display:none;background:#fff3cd;color:#7a5b00;border:1px solid #ffe08a;border-radius:8px;padding:10px 12px;font-size:13px;margin-top:10px;">⚠️ الصفحة مفتوحة مباشرة كملف (file://)، وهذا يمنع عمل تكبير الصوت والاتصال بالبلوتوث في معظم المتصفحات. افتح الموقع عبر سيرفر محلي (مثل http://localhost) بدلًا من فتح الملف مباشرة.</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="lesson-nav">
+        <button class="prev" onclick="backToTrackPicker()">تغيير المسار</button>
+        <button class="quiz-btn" onclick="showSection('quiz')">ابدأ الاختبار</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <h2>اختبار المفاهيم</h2>
+    <div class="card">
+      <div class="quiz-q">
+        <p>1. ما هو المكون المسؤول عن تنفيذ العمليات الحسابية والمنطقية في الحاسوب؟</p>
+        <label><input type="radio" name="q1" value="0">RAM</label>
+        <label><input type="radio" name="q1" value="1">CPU</label>
+        <label><input type="radio" name="q1" value="0">Hard Disk</label>
+      </div>
+      <div class="quiz-q">
+        <p>2. أي من التالي يعتبر من أجهزة الإدخال؟</p>
+        <label><input type="radio" name="q2" value="0">الشاشة</label>
+        <label><input type="radio" name="q2" value="0">الطابعة</label>
+        <label><input type="radio" name="q2" value="1">الفأرة</label>
+      </div>
+      <div class="quiz-q">
+        <p>3. أي مما يلي يُعتبر مثالًا على البرمجيات؟</p>
+        <label><input type="radio" name="q3" value="0">لوحة المفاتيح</label>
+        <label><input type="radio" name="q3" value="1">Windows 11</label>
+        <label><input type="radio" name="q3" value="0">المعالج</label>
+      </div>
+      <div class="quiz-q">
+        <p>4. ما الفرق الرئيسي بين RAM و ROM؟</p>
+        <label><input type="radio" name="q4" value="0">RAM أسرع من ROM</label>
+        <label><input type="radio" name="q4" value="0">RAM تخزن البيانات بشكل دائم</label>
+        <label><input type="radio" name="q4" value="1">RAM تخزن البيانات مؤقتًا</label>
+      </div>
+      <div class="quiz-q">
+        <p>5. أي من التالي شبكة محلية؟</p>
+        <label><input type="radio" name="q5" value="0">الإنترنت</label>
+        <label><input type="radio" name="q5" value="0">شبكة الهاتف المحمول</label>
+        <label><input type="radio" name="q5" value="1">LAN</label>
+      </div>
+      <div class="quiz-q">
+        <p>6. ما وظيفة جدار الحماية (Firewall)؟</p>
+        <label><input type="radio" name="q6" value="0">تسريع الإنترنت</label>
+        <label><input type="radio" name="q6" value="1">حماية الحاسوب من الفيروسات</label>
+        <label><input type="radio" name="q6" value="0">تحسين جودة الصور</label>
+      </div>
+      <div class="quiz-q">
+        <p>7. أي من التالي يُعتبر تهديدًا أمنيًا؟</p>
+        <label><input type="radio" name="q7" value="0">برنامج Excel</label>
+        <label><input type="radio" name="q7" value="0">ملف نصي</label>
+        <label><input type="radio" name="q7" value="1">فيروس حاسوبي</label>
+      </div>
+      <div class="quiz-q">
+        <p>8. أي مما يلي يُعد من وحدات الإخراج؟</p>
+        <label><input type="radio" name="q8" value="0">لوحة المفاتيح</label>
+        <label><input type="radio" name="q8" value="0">الفأرة</label>
+        <label><input type="radio" name="q8" value="1">الشاشة</label>
+      </div>
+      <div class="quiz-q">
+        <p>9. ما هو دور نظام التشغيل في الحاسوب؟</p>
+        <label><input type="radio" name="q9" value="0">عرض الصور</label>
+        <label><input type="radio" name="q9" value="0">تشغيل الألعاب</label>
+        <label><input type="radio" name="q9" value="1">إدارة الموارد والمهام</label>
+      </div>
+      <div class="quiz-q">
+        <p>10. ما هو العنصر المسؤول عن تخزين البيانات مؤقتًا؟</p>
+        <label><input type="radio" name="q10" value="1">RAM</label>
+        <label><input type="radio" name="q10" value="0">Cache</label>
+        <label><input type="radio" name="q10" value="0">Hard Disk</label>
+      </div>
+      <div class="quiz-q">
+        <p>11. أي من هذه لغات برمجة؟</p>
+        <label><input type="radio" name="q11" value="0">HTML</label>
+        <label><input type="radio" name="q11" value="1">Java</label>
+        <label><input type="radio" name="q11" value="0">SQL</label>
+      </div>
+      <div class="quiz-q">
+        <p>12. ما هي وظيفة اللوحة الأم (Motherboard) في الحاسوب؟</p>
+        <label><input type="radio" name="q12" value="0">تخزين البيانات</label>
+        <label><input type="radio" name="q12" value="0">تنفيذ العمليات</label>
+        <label><input type="radio" name="q12" value="1">توصيل مكونات الحاسوب لبعضها</label>
+      </div>
+      <div class="quiz-q">
+        <p>13. أي من التالي يُعد من مكونات وحدة المعالجة المركزية؟</p>
+        <label><input type="radio" name="q13" value="0">الذاكرة</label>
+        <label><input type="radio" name="q13" value="0">القرص الصلب</label>
+        <label><input type="radio" name="q13" value="1">وحدة التحكم والمنطق</label>
+      </div>
+      <div class="quiz-q">
+        <p>14. أي من أنظمة التشغيل التالية يُستخدم في الهواتف الذكية؟</p>
+        <label><input type="radio" name="q14" value="0">Windows</label>
+        <label><input type="radio" name="q14" value="1">Android</label>
+        <label><input type="radio" name="q14" value="0">macOS</label>
+      </div>
+      <div class="quiz-q">
+        <p>15. أي من أنظمة التشغيل التالية يُستخدم في أجهزة Apple؟</p>
+        <label><input type="radio" name="q15" value="0">Windows</label>
+        <label><input type="radio" name="q15" value="0">Linux</label>
+        <label><input type="radio" name="q15" value="1">macOS</label>
+      </div>
+      <div class="quiz-q">
+        <p>16. ما الفرق بين نظام Windows و Linux؟</p>
+        <label><input type="radio" name="q16" value="0">كلاهما مغلق المصدر</label>
+        <label><input type="radio" name="q16" value="0">Windows مفتوح المصدر و Linux مغلق</label>
+        <label><input type="radio" name="q16" value="1">Linux مفتوح المصدر و Windows مغلق</label>
+      </div>
+      <button class="btn-primary" onclick="gradeQuiz()">إظهار النتيجة</button>
+      <p class="quiz-result" id="quizResult"></p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>اتصل بنا</h2>
+    <div class="card">
+      <p><b>الباحثة:</b> هالة حسني محمد كمال - أخصائية اجتماعية</p>
+      <p><b>تحت إشراف:</b></p>
+      <p>أ.م.د محمود مصطفى عطية - أستاذ تكنولوجيا تعليم مساعد، كلية التربية، جامعة عين شمس</p>
+      <p>د. سمر رجب حافظ - مدرس قسم تربية خاصة، كلية التربية، جامعة عين شمس</p>
+      <p><b>الجهة:</b> كلية التربية - جامعة عين شمس - قسم المناهج وطرق التدريس</p>
+      <p><b>البريد الإلكتروني:</b> <a href="mailto:halahosny0000@gmail.com">halahosny0000@gmail.com</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 - Eng/ Ahmed Hassan | +201114463534</footer>
+
+<script>
+function showSection(id){
+  document.querySelectorAll('main section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('#mainNav button').forEach(b=>b.classList.remove('active'));
+  const navBtn = document.querySelector('#mainNav button[data-section="'+id+'"]');
+  if(navBtn) navBtn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('#mainNav button').forEach(btn=>{
+  btn.addEventListener('click',()=>showSection(btn.dataset.section));
+});
+document.querySelectorAll('.tabs button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+function openLesson(track){
+  document.getElementById('trackPicker').style.display='none';
+  document.getElementById('lessonView').style.display='block';
+  document.getElementById('lvTrackBadge').textContent = track==='weak' ? 'مسار: ضعاف السمع' : 'مسار: متوسطي السمع';
+  document.getElementById('weakContent').style.display = track==='weak' ? 'block' : 'none';
+  document.getElementById('midContent').style.display = track==='mid' ? 'block' : 'none';
+  document.getElementById('lessonView').scrollIntoView({behavior:'smooth'});
+}
+function backToTrackPicker(){
+  document.getElementById('lessonView').style.display='none';
+  document.getElementById('trackPicker').style.display='block';
+  const v = document.getElementById('senseVideo'); if(v) v.pause();
+  const a = document.getElementById('senseAudio'); if(a) a.pause();
+}
+
+/* ---- مستوى الصوت (تضخيم يتجاوز 100% عبر Web Audio API) ---- */
+let audioCtx, gainNode, sourceNode;
+function ensureAudioGraph(){
+  if(audioCtx) return;
+  const audioEl = document.getElementById('senseAudio');
+  audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  sourceNode = audioCtx.createMediaElementSource(audioEl);
+  gainNode = audioCtx.createGain();
+  sourceNode.connect(gainNode).connect(audioCtx.destination);
+}
+document.querySelectorAll('.vol-btns button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    try{
+      ensureAudioGraph();
+      if(audioCtx.state==='suspended') audioCtx.resume();
+      gainNode.gain.value = parseFloat(btn.dataset.vol);
+      document.querySelectorAll('.vol-btns button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+    }catch(e){
+      alert('تعذّر تفعيل تكبير الصوت في هذا المتصفح.');
+    }
+  });
+});
+
+/* ---- الاتصال بسماعة بلوتوث (اختيار جهاز الإخراج الصوتي) ---- */
+const btBtn = document.getElementById('btConnectBtn');
+if(btBtn){
+  btBtn.addEventListener('click', async ()=>{
+    try{
+      await navigator.mediaDevices.getUserMedia({audio:true});
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const outputs = devices.filter(d=>d.kind==='audiooutput');
+      const select = document.getElementById('audioOutputSelect');
+      select.innerHTML = '<option value="">اختر جهاز الصوت</option>' +
+        outputs.map(d=>`<option value="${d.deviceId}">${d.label || 'جهاز صوت'}</option>`).join('');
+      select.style.display = 'block';
+      if(!outputs.length){
+        alert('لم يتم العثور على أجهزة صوت. تأكد من إقران سماعة البلوتوث بالجهاز أولًا من إعدادات النظام.');
+      }
+    }catch(e){
+      alert('برجاء السماح بالوصول للمايكروفون حتى تظهر أسماء أجهزة الصوت (لن يتم تسجيل أي صوت — هذا الإذن مطلوب من المتصفح فقط لعرض أسماء الأجهزة).');
+    }
+  });
+  document.getElementById('audioOutputSelect').addEventListener('change', async (e)=>{
+    const audioEl = document.getElementById('senseAudio');
+    if(!e.target.value) return;
+    if(typeof audioEl.setSinkId === 'function'){
+      try{ await audioEl.setSinkId(e.target.value); }
+      catch(err){ alert('تعذر توجيه الصوت لهذا الجهاز.'); }
+    }else{
+      alert('هذا المتصفح لا يدعم تحويل الصوت مباشرة من الموقع. يمكنك اختيار سماعة البلوتوث كجهاز الإخراج الافتراضي من إعدادات النظام بدلًا من ذلك.');
+    }
+  });
+}
+
+function gradeQuiz(){
+  let score=0, total=16;
+  for(let i=1;i<=total;i++){
+    const sel = document.querySelector('input[name="q'+i+'"]:checked');
+    if(sel && sel.value==='1') score++;
+  }
+  document.getElementById('quizResult').textContent = 'نتيجتك: '+score+' من '+total;
+}
+</script>
+
+</body>
+</html>
